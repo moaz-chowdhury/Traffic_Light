@@ -1,0 +1,41 @@
+---
+config:
+  theme: mc
+---
+classDiagram
+    class TrafficLight {
+        - int redPin
+        - int yellowPin
+        - int greenPin
+        - String currentState
+        - bool wasGreenBefore
+        + TrafficLight(int rPin, int yPin, int gPin)
+        + void setup()
+        + void update()
+        - void setState(String state)
+    }
+    class TrafficState {
+        <<Enumeration>>
+        + RED
+        + YELLOW
+        + GREEN
+    }
+    class LEDRed {
+        + int pin
+        + void on()
+        + void off()
+    }
+    class LEDYellow {
+        + int pin
+        + void on()
+        + void off()
+    }
+    class LEDGreen {
+        + int pin
+        + void on()
+        + void off()
+    }
+    TrafficLight o-- LEDRed
+    TrafficLight o-- LEDYellow
+    TrafficLight o-- LEDGreen
+    TrafficLight ..> TrafficState

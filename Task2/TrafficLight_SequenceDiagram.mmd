@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant Button
+    participant TrafficLight
+    participant PedestrianLight
+    participant LEDRed as Traffic Red LED
+    participant LEDYellow as Traffic Yellow LED
+    participant LEDGreen as Traffic Green LED
+    participant PedRed as Pedestrian Red LED
+    participant PedGreen as Pedestrian Green LED
+
+    Button->>TrafficLight: Button pressed (setPedestrianWaiting)
+    TrafficLight->>LEDGreen: Turn OFF Green LED
+    TrafficLight->>LEDYellow: Turn ON Yellow LED
+    TrafficLight->>TrafficLight: Wait for yellowDuration
+    TrafficLight->>LEDYellow: Turn OFF Yellow LED
+    TrafficLight->>LEDRed: Turn ON Red LED
+    TrafficLight->>PedestrianLight: Activate pedestrian light
+    PedestrianLight->>PedRed: Turn OFF Pedestrian Red LED
+    PedestrianLight->>PedGreen: Turn ON Pedestrian Green LED
+    TrafficLight->>TrafficLight: Wait for redDuration
+    TrafficLight->>PedestrianLight: Deactivate pedestrian light
+    PedestrianLight->>PedGreen: Turn OFF Pedestrian Green LED
+    PedestrianLight->>PedRed: Turn ON Pedestrian Red LED
+    TrafficLight->>LEDRed: Turn OFF Red LED
+    TrafficLight->>LEDYellow: Turn ON Yellow LED
+    TrafficLight->>TrafficLight: Wait for yellowDuration
+    TrafficLight->>LEDYellow: Turn OFF Yellow LED
+    TrafficLight->>LEDGreen: Turn ON Green LED

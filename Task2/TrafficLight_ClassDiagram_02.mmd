@@ -1,0 +1,50 @@
+classDiagram
+    class TrafficLight {
+        -int redPin
+        -int yellowPin
+        -int greenPin
+        -unsigned long previousMillis
+        -bool pedestrianWaiting
+        -bool wasGreenBefore
+        -TrafficState currentState
+        +TrafficLight(int rPin, int yPin, int gPin)
+        +void setPedestrianWaiting(bool waiting)
+        +void update(unsigned long currentMillis, PedestrianLight &pedLight)
+        -void handleGreenState(unsigned long currentMillis)
+        -void handleYellowState(unsigned long currentMillis)
+        -void handleRedState(unsigned long currentMillis, PedestrianLight &pedLight)
+    }
+
+    class TrafficState {
+        <<enumeration>>
+        +RED
+        +YELLOW
+        +GREEN
+    }
+
+    class PedestrianLight {
+        -int redPin
+        -int greenPin
+        +PedestrianLight(int rPin, int gPin)
+        +void activate()
+        +void deactivate()
+    }
+
+    class Button {
+        -int pin
+        +Button(int pin)
+        +int readState()
+    }
+
+    class Arduino {
+        +setup()
+        +loop()
+    }
+
+    %% Relationships
+    Arduino *-- TrafficLight
+    Arduino *-- PedestrianLight
+    Arduino ..> Button
+    TrafficLight o-- PedestrianLight
+    TrafficLight ..> TrafficState
+    TrafficLight ..> Button
