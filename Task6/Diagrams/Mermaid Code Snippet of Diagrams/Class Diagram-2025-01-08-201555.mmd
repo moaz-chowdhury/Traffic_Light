@@ -1,0 +1,58 @@
+classDiagram
+    class MasterController {
+        -int D1RedPin
+        -int D1YellowPin
+        -int D1GreenPin
+        -int D1BlinkingOrangePin
+        -int D2RedPin
+        -int D2YellowPin
+        -int D2GreenPin
+        -int D2BlinkingOrangePin
+        -int buttonPin
+        -unsigned long previousMillis
+        -unsigned long previousBlinkMillis
+        -bool buttonPressed
+        -bool blinkState
+        -enum State
+        +setup()
+        +loop()
+        -setD1Lights(int green, int yellow, int red)
+        -setD2Lights(int green, int yellow, int red)
+        -notifyD3(char state)
+        -notifyPed(char state)
+    }
+
+    class PedestrianLight {
+        -int pedRedPin
+        -int pedGreenPin
+        -int pedBlinkingOrangePin
+        -unsigned long previousBlinkMillis
+        -bool blinkState
+        -bool isGreen
+        +setup()
+        +loop()
+        +receiveEvent(int howMany)
+    }
+
+    class D3TrafficLight {
+        -int D3RedPin
+        -int D3YellowPin
+        -int D3GreenPin
+        +setup()
+        +loop()
+        +receiveEvent(int howMany)
+    }
+
+    class I2CCommunication {
+        +Wire.begin()
+        +Wire.beginTransmission()
+        +Wire.write()
+        +Wire.endTransmission()
+        +Wire.onReceive()
+    }
+
+    MasterController --|> I2CCommunication : uses
+    PedestrianLight --|> I2CCommunication : uses
+    D3TrafficLight --|> I2CCommunication : uses
+    MasterController ..> PedestrianLight : controls
+    MasterController ..> D3TrafficLight : controls

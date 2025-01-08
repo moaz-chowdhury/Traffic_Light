@@ -1,0 +1,45 @@
+stateDiagram-v2
+    [*] --> S1
+    
+    S1 : D1/D2 Green State
+    note right of S1
+        D1/D2: Green
+        D3: Red
+        Ped: Red
+        D1/D2 Orange: Blinking
+        Duration: 5s
+    end note
+    
+    S2 : First Yellow State
+    note right of S2
+        D1/D2: Yellow
+        D3: Yellow
+        Ped: Red
+        D1/D2 Orange: OFF
+        Duration: 2s
+    end note
+    
+    S3 : D3 Green State
+    note right of S3
+        D1/D2: Red
+        D3: Green
+        Ped: Green (if button pressed)
+        Ped Orange: Blinking (if button pressed)
+        Duration: 5s
+    end note
+    
+    S4 : Second Yellow State
+    note right of S4
+        D1/D2: Yellow
+        D3: Yellow
+        Ped: Red
+        All Orange: OFF
+        Duration: 2s
+    end note
+
+    S1 --> S2: After 20s
+    S2 --> S3: After 5s
+    S3 --> S4: After 20s
+    S4 --> S1: After 5s
+
+    note left of S3: Button press only registered<br/>during D3 Green state

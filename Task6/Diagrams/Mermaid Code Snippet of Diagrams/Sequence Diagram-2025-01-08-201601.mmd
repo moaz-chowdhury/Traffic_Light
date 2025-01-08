@@ -1,0 +1,51 @@
+sequenceDiagram
+    participant B as Button
+    participant M as Master Controller (D1/D2)
+    participant D3 as D3 Traffic Light
+    participant P as Pedestrian Light
+    
+    Note over M,P: Initial State: D1/D2 Green, D3 Red, Ped Red
+    
+    rect rgb(200, 240, 200)
+        Note over M: State 1: D1/D2 Green (5s)
+        M->>M: D1/D2 Orange Blinking
+        M->>D3: Keep Red
+        M->>P: Keep Red
+    end
+
+    rect rgb(240, 240, 200)
+        Note over M: State 2: All Yellow (2s)
+        M->>M: D1/D2 Yellow, Orange OFF
+        M->>D3: Yellow
+        M->>P: Keep Red
+    end
+    
+    rect rgb(200, 200, 240)
+        Note over M: State 3: D3 Green (5s)
+        M->>M: D1/D2 Red, Orange OFF
+        M->>D3: Green
+        
+        alt Button Pressed
+            B->>M: Button Signal
+            M->>P: Turn Green
+            P->>P: Orange Blinking
+        else No Button Press
+            M->>P: Keep Red
+        end
+    end
+    
+    rect rgb(240, 240, 200)
+        Note over M: State 4: All Yellow (2s)
+        M->>M: D1/D2 Yellow
+        M->>D3: Yellow
+        M->>P: Red, Orange OFF
+    end
+    
+    Note over M,P: Cycle Repeats
+    
+    rect rgb(200, 240, 200)
+        Note over M: Back to State 1
+        M->>M: D1/D2 Green, Orange Blinking
+        M->>D3: Red
+        M->>P: Keep Red
+    end
